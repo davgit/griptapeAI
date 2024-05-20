@@ -15,7 +15,7 @@ from griptape.events.action_chunk_event import ActionChunkEvent
 from griptape.mixins import ExponentialBackoffMixin
 from griptape.mixins.serializable_mixin import SerializableMixin
 from griptape.tokenizers import BaseTokenizer
-from griptape.utils import PromptStack
+from griptape.common import PromptStack
 
 if TYPE_CHECKING:
     from griptape.structures import Structure

@@ -1,7 +1,8 @@
 from __future__ import annotations
 from attr import define, field
 from griptape.artifacts import TextArtifact
-from griptape.utils import PromptStack, import_optional_dependency
+from griptape.common import PromptStack
+from griptape.utils import import_optional_dependency
 from griptape.drivers import BasePromptModelDriver
 from griptape.tokenizers import HuggingFaceTokenizer
 

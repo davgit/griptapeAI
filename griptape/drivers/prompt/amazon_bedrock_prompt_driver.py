@@ -8,7 +8,7 @@ from griptape.utils import import_optional_dependency
 from .base_multi_model_prompt_driver import BaseMultiModelPromptDriver
 
 if TYPE_CHECKING:
-    from griptape.utils import PromptStack
+    from griptape.common import PromptStack
     import boto3
 
 

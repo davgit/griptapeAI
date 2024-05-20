@@ -3,7 +3,8 @@ from typing import Optional, Any
 from collections.abc import Iterator
 from attr import define, field, Factory
 from griptape.artifacts import TextArtifact
-from griptape.utils import PromptStack, import_optional_dependency
+from griptape.common import PromptStack
+from griptape.utils import import_optional_dependency
 from griptape.drivers import BasePromptDriver
 from griptape.tokenizers import AnthropicTokenizer
 
@@ -16,6 +17,7 @@ class AnthropicPromptDriver(BasePromptDriver):
         model: Anthropic model name.
         client: Custom `Anthropic` client.
         tokenizer: Custom `AnthropicTokenizer`.
+        function_calling: Whether to use native function calling. Defaults to `True`.
     """
 
     api_key: Optional[str] = field(kw_only=True, default=None, metadata={"serializable": False})
@@ -31,6 +33,7 @@ class AnthropicPromptDriver(BasePromptDriver):
     )
     top_p: float = field(default=0.999, kw_only=True, metadata={"serializable": True})
     top_k: int = field(default=250, kw_only=True, metadata={"serializable": True})
+    function_calling: bool = field(default=True, kw_only=True, metadata={"serializable": True})
 
     def try_run(self, prompt_stack: PromptStack) -> TextArtifact:
         response = self.client.messages.create(**self._base_params(prompt_stack))
@@ -71,7 +74,9 @@ class AnthropicPromptDriver(BasePromptDriver):
     def __to_anthropic_role(self, prompt_input: PromptStack.Input) -> str:
         if prompt_input.is_system():
             return "system"
-        elif prompt_input.is_assistant():
+        elif prompt_input.is_assistant() or prompt_input.is_tool_call():
             return "assistant"
+        elif prompt_input.is_user() or prompt_input.is_tool_result():
+            return "user"
         else:
             return "user"

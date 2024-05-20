@@ -8,7 +8,8 @@ from griptape import utils
 from griptape.artifacts import InfoArtifact, BaseArtifact, ErrorArtifact, ListArtifact
 from griptape.tasks import PromptTask, ActionsSubtask
 from griptape.tools import BaseTool
-from griptape.utils import J2, PromptStack
+from griptape.utils import J2
+from griptape.common import PromptStack
 from griptape.mixins import ActionsSubtaskOriginMixin
 
 if TYPE_CHECKING:

@@ -1,6 +1,6 @@
 from attr import define, field, Factory
 from typing import Callable, Optional
-from griptape.utils import PromptStack
+from griptape.common import PromptStack
 from griptape.drivers import OpenAiChatPromptDriver
 import openai
 

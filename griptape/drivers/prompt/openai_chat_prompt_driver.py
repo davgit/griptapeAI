@@ -13,7 +13,7 @@ from griptape.artifacts import ActionsArtifact, TextArtifact
 from griptape.artifacts.action_chunk_artifact import ActionChunkArtifact
 from griptape.drivers import BasePromptDriver
 from griptape.tokenizers import BaseTokenizer, OpenAiTokenizer
-from griptape.utils import PromptStack
+from griptape.common import PromptStack
 
 if TYPE_CHECKING:
     from griptape.tools import BaseTool
@@ -211,9 +211,7 @@ class OpenAiChatPromptDriver(BasePromptDriver):
     def __to_openai_role(self, prompt_input: PromptStack.Input) -> str:
         if prompt_input.is_system():
             return "system"
-        elif prompt_input.is_assistant():
-            return "assistant"
-        elif prompt_input.is_tool_call():
+        elif prompt_input.is_assistant() or prompt_input.is_tool_call():
             return "assistant"
         elif prompt_input.is_tool_result():
             return "tool"
